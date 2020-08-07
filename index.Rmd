@@ -1,0 +1,87 @@
+---
+title: "What does the Data Team do?"
+subtitle: "<br/>Featuring R"
+author: "Patrick Anker"
+institute: "Global TIES for Children"
+output:
+  xaringan::moon_reader:
+    css: xaringan-themer.css
+---
+class: inverse, middle, center
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+
+library(xaringanthemer)
+style_mono_accent(
+  text_font_google = google_font("Montserrat", "300", "300i"),
+  code_font_google = google_font("Fira Mono")
+)
+
+library(magrittr)
+```
+
+# Before we begin...
+
+All materials in this presentation can be downloaded from 
+
+## Data Team Motivation
+
+- Studies feature multiple kinds of data (surveys, activity trackers, etc.)
+- Varying degree of data trustworthiness and cleanliness
+- Previously no 3EA-specific standards for data management
+
+---
+
+## Why R?
+
+- Needed flexible language to address data problems
+- Easy to use
+
+--
+
+- Mayarí started the team, and she knew R so... here we are lol
+
+---
+class: inverse, middle, center
+
+# Basic R Setup
+
+---
+
+## Installation
+
+- [Install R](https://cran.r-project.org/)
+- [Install RStudio](https://rstudio.com/products/rstudio/download/)
+
+We need to install both, unlike STATA for example, since R does not provide an _integrated development environment_ (IDE). That's where RStudio comes in.
+
+<img src="images/r-logo.svg" width="20%" style="float:left" /> <img src="images/rstudio-logo.svg" width="40%" style="float:right" />
+
+---
+
+## Packages
+
+Packages collections of code that extend base R's functionality.
+
+```{r, echo=FALSE}
+set.seed(1572)
+
+installed.packages() %>% 
+  tibble::as_tibble() %>% 
+  dplyr::select(Package, Version) %>% 
+  dplyr::slice_sample(n = 9)
+```
+
+---
+
+## Packages
+
+Let's install some popular and handy packages. Open RStudio, and run these lines in the "Console" tab: 
+
+```{r, eval=FALSE}
+install.packages("tidyverse")
+install.packages("tidymodels")
+```
+
+You only need to run these **once**. Once you have them installed, you don't need to keep reinstalling them (I see this often in R analysis scripts!!).
