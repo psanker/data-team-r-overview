@@ -6,8 +6,17 @@ institute: "Global TIES for Children"
 output:
   xaringan::moon_reader:
     css: xaringan-themer.css
+    nature:
+      countIncrementalSlides: false
+      highlightLines: true
 ---
-class: inverse, middle, center
+class: middle, center
+
+<style>
+pre {
+  overflow: hidden;
+}
+</style>
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
@@ -24,6 +33,17 @@ library(magrittr)
 # Before we begin...
 
 All materials in this presentation can be downloaded from 
+
+**>> [this presentation's repository](https://github.com/psanker/data-team-r-overview) <<**
+
+## 🚀
+
+---
+class: middle, center, inverse
+
+# Background
+
+---
 
 ## Data Team Motivation
 
@@ -84,4 +104,305 @@ install.packages("tidyverse")
 install.packages("tidymodels")
 ```
 
-You only need to run these **once**. Once you have them installed, you don't need to keep reinstalling them (I see this often in R analysis scripts!!).
+You only need to run these **once**. Once you have them installed, you don't need to keep re-installing them (_I see this often in R analysis scripts!!_).
+
+---
+class: middle, center, inverse
+
+# Let's use R!
+
+## 🖥
+
+---
+
+# Attaching Packages
+
+The first step in an R script is to **attach your desired packages**
+
+```{r}
+library(tidyverse)
+```
+
+---
+
+# Attaching Packages
+
+```{r}
+# This is part of the "tidymodels" meta-package
+library(modeldata)
+```
+
+---
+
+# Attaching Packages
+
+Attaching a package with `library()` loads all of its **functions** into your environment:
+
+```{r, eval=FALSE}
+this_is_a_function(some_input, another_input)
+```
+
+If you *don't* attach a package, you'll have to refer to its functions using `::`
+
+```{r, eval=FALSE}
+packagename::this_is_a_function(some_input, another_input)
+```
+
+---
+class: middle
+
+We're going to use the `ames` dataset from {modeldata}.
+
+```{r}
+data(ames, package = "modeldata")
+```
+
+`ames` is a running log of houses built in [Ames, IA](https://en.wikipedia.org/wiki/Ames%2C_Iowa) since 1872. It's a good dataset for teaching.
+
+---
+
+Let's take a look at the data. We'll use `str()` which examines the **str**ucture of any R object.
+
+```{r}
+str(ames)
+```
+
+---
+
+Let's select the first few columns and get their summaries.
+
+```{r}
+ames %>% 
+  select(Lot_Frontage:Lot_Config) %>% 
+  summary()
+```
+
+`select()` is from the {dplyr} package, a popular tool for data manipulation.
+
+---
+class: middle, center
+
+## _A Brief Aside_
+
+### What the heck is
+
+# `%>%`
+
+### ???
+
+---
+
+.center[ 
+# %>% 
+## This is a _pipe_.
+]
+
+The _pipe_ is a tool that allows people to _chain functions together_. Rather than writing
+
+```{r, eval=FALSE}
+h(g(f(x)))
+```
+
+we can write
+
+```{r, eval=FALSE}
+x %>% 
+  f() %>% 
+  g() %>% 
+  h()
+```
+
+The pipe is provided by the **{magrittr}** package (and re-exported by members of tidyverse). It works by inserting the _output_ of the previous function into the _first_ argument of the next.
+
+---
+
+### This means
+
+```{r, eval=FALSE}
+step1 <- first_step(input)
+step2 <- second_step(step1, run_task = TRUE)
+third_step(step2, with_marmalade = FALSE)
+```
+
+### is functionally equivalent to
+
+```{r, eval=FALSE}
+input %>% 
+  first_step() %>% 
+  second_step(run_task = TRUE) %>% 
+  third_step(with_marmalade = FALSE)
+```
+
+--
+
+.center[
+## Cleaner, no?
+]
+
+---
+class: middle, center, inverse
+
+# Aside over
+
+## ✅
+
+---
+class: middle
+
+We have all of this housing data. Let's explore it a bit.
+
+--
+
+Why not take a look at historical trends?
+
+--
+
+The package **{ggplot2}** gives us a handy toolkit for visualization based on the Grammar of Graphics (basic overview [here](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149)).
+
+---
+
+```{r, warning=FALSE, fig.height=7, message=FALSE}
+ames %>% 
+  ggplot(aes(x = Year_Built)) +
+  geom_histogram()
+```
+
+---
+class: middle
+
+## How does the sale price relate to the construction year?
+
+---
+
+```{r, warning=FALSE, fig.height=7, message=FALSE}
+ames %>% 
+  ggplot(aes(x = Year_Built, y = Sale_Price)) +
+  geom_point() + 
+  stat_smooth(method = "loess")
+```
+
+---
+class: middle
+
+### Looks like the prices started to rise after the 1940s.
+
+## Could the inclusion of air conditioning have anything to do with it?
+
+---
+
+Firstly, let's put the sale price on log units.
+
+```{r}
+ames_edited <- 
+  ames %>% 
+  mutate(log_sale_price = log10(Sale_Price))
+```
+
+`mutate()` is another {dplyr} function that creates or modifies variables in a dataset. In this case, I'm creating the variable `log_sale_price` to exist in the newly created `ames_edited` dataset.
+
+--
+
+_Yes, you can have multiple datasets open at once!_
+
+--
+
+The `<-` symbol is the _assignment operator_ in R. It assigns the value of the right-hand side to a variable _symbol_ on the left-hand side.
+
+---
+
+```{r, warning=FALSE, fig.height=7, message=FALSE}
+ames_edited %>% 
+  ggplot(aes(x = Year_Built, y = log_sale_price, color = Central_Air)) +
+  geom_point(alpha = 0.5)
+```
+
+---
+class: middle
+
+### It's a little hard to tease out with that visualization, but it looks to have some form of effect.
+
+## Let's split the plots to see better...
+
+---
+
+```{r, warning=FALSE, fig.height=6.5, message=FALSE}
+ames_edited %>% 
+  ggplot(aes(x = Year_Built, y = log_sale_price)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = "lm") +
+  facet_wrap(~ Central_Air)
+```
+
+---
+
+### It definitely seems to influence the sale price to some degree. 
+
+### Let's run ANOVA to get some statistical insight. 
+
+### But this time let's do this in a more streamlined and scalable manner...
+
+---
+class: middle
+
+```{r}
+# No Central_Air covariate
+mod_1 <- log_sale_price ~ Year_Built
+
+# Inclusion of Central_Air, but no interaction with Year_Built 
+mod_2 <- log_sale_price ~ Year_Built + Central_Air
+
+# Inclusion of Central_Air with interaction
+mod_3 <- log_sale_price ~ Year_Built * Central_Air 
+
+splat <- function(.x, .f) {
+  do.call(.f, .x)
+}
+
+mod_anova <- 
+  # Collect all models together
+  list(mod_1, mod_2, mod_3) %>% 
+  
+  # For each model, run a linear model fit with ames_edited
+  map(function(.x) lm(.x, data = ames_edited)) %>% 
+  
+  # "Splat" the results into anova: 
+  # Converts splat(x, f) --> f(x_1, x_2, ..., x_n)
+  splat(anova)
+```
+
+.center[
+## 😲🤨
+]
+
+---
+
+We'll use the **{broom}** package from tidymodels to collect the summary statistics into a consistent format. There are **_many_** modeling packages out there, and not all of them have consistent output. broom solves this problem for _most_ common modeling tools.
+
+```{r}
+library(broom)
+```
+
+--
+
+```{r}
+tidy(mod_anova)
+```
+
+---
+
+# Summary
+
+- Has a great ecosystem of tools for data manipulation and visualization.
+- Has an *impressively large* selection of modeling tools<sup>1</sup>, and {broom} deals with _tidying_ the model outputs into a consistent format.
+- Is _extremely versatile_ because of its **functional language** style.
+- Has a very friendly community, many of whom are in NYC!
+
+.footnote[
+[1]: It is a language built by statisticians after all.
+]
+---
+class: center, middle, inverse
+
+# So how does the Data Team use R?
+
+# 🤔

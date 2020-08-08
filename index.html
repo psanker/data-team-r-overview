@@ -18,8 +18,30 @@ class: center, middle, inverse, title-slide
 
 ---
 
+class: middle, center
+
+&lt;style&gt;
+pre {
+  overflow: hidden;
+}
+&lt;/style&gt;
 
 
+
+# Before we begin...
+
+All materials in this presentation can be downloaded from 
+
+**&gt;&gt; [this presentation's repository](https://github.com/psanker/data-team-r-overview) &lt;&lt;**
+
+## 🚀
+
+---
+class: middle, center, inverse
+
+# Background
+
+---
 
 ## Data Team Motivation
 
@@ -66,8 +88,8 @@ Packages collections of code that extend base R's functionality.
 ##   Package   Version
 ##   &lt;chr&gt;     &lt;chr&gt;  
 ## 1 munsell   0.5.0  
-## 2 stringr   1.4.0  
-## 3 sys       3.4    
+## 2 storr     1.2.1  
+## 3 stringr   1.4.0  
 ## 4 processx  3.4.3  
 ## 5 glue      1.4.1  
 ## 6 clipr     0.7.0  
@@ -88,11 +110,550 @@ install.packages("tidyverse")
 install.packages("tidymodels")
 ```
 
-You only need to run these **once**. Once you have them installed, you don't need to keep reinstalling them (I see this often in R analysis scripts!!).
+You only need to run these **once**. Once you have them installed, you don't need to keep re-installing them (_I see this often in R analysis scripts!!_).
+
+---
+class: middle, center, inverse
+
+# Let's use R!
+
+## 🖥
+
+---
+
+# Attaching Packages
+
+The first step in an R script is to **attach your desired packages**
+
+
+```r
+library(tidyverse)
+```
+
+```
+## ── Attaching packages ──────────────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+```
+
+```
+## ✓ ggplot2 3.3.2     ✓ purrr   0.3.4
+## ✓ tibble  3.0.3     ✓ dplyr   1.0.1
+## ✓ tidyr   1.1.1     ✓ stringr 1.4.0
+## ✓ readr   1.3.1     ✓ forcats 0.5.0
+```
+
+```
+## ── Conflicts ─────────────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## x tidyr::extract()   masks magrittr::extract()
+## x dplyr::filter()    masks stats::filter()
+## x dplyr::lag()       masks stats::lag()
+## x purrr::set_names() masks magrittr::set_names()
+```
+
+---
+
+# Attaching Packages
+
+
+```r
+# This is part of the "tidymodels" meta-package
+library(modeldata)
+```
+
+---
+
+# Attaching Packages
+
+Attaching a package with `library()` loads all of its **functions** into your environment:
+
+
+```r
+this_is_a_function(some_input, another_input)
+```
+
+If you *don't* attach a package, you'll have to refer to its functions using `::`
+
+
+```r
+packagename::this_is_a_function(some_input, another_input)
+```
+
+---
+class: middle
+
+We're going to use the `ames` dataset from {modeldata}.
+
+
+```r
+data(ames, package = "modeldata")
+```
+
+`ames` is a running log of houses built in [Ames, IA](https://en.wikipedia.org/wiki/Ames%2C_Iowa) since 1872. It's a good dataset for teaching.
+
+---
+
+Let's take a look at the data. We'll use `str()` which examines the **str**ucture of any R object.
+
+
+```r
+str(ames)
+```
+
+```
+## tibble [2,930 × 74] (S3: tbl_df/tbl/data.frame)
+##  $ MS_SubClass       : Factor w/ 16 levels "One_Story_1946_and_Newer_All_Styles",..: 1 1 1 1 6 6 12 12 12 6 ...
+##  $ MS_Zoning         : Factor w/ 7 levels "Floating_Village_Residential",..: 3 2 3 3 3 3 3 3 3 3 ...
+##  $ Lot_Frontage      : num [1:2930] 141 80 81 93 74 78 41 43 39 60 ...
+##  $ Lot_Area          : int [1:2930] 31770 11622 14267 11160 13830 9978 4920 5005 5389 7500 ...
+##  $ Street            : Factor w/ 2 levels "Grvl","Pave": 2 2 2 2 2 2 2 2 2 2 ...
+##  $ Alley             : Factor w/ 3 levels "Gravel","No_Alley_Access",..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ Lot_Shape         : Factor w/ 4 levels "Regular","Slightly_Irregular",..: 2 1 2 1 2 2 1 2 2 1 ...
+##  $ Land_Contour      : Factor w/ 4 levels "Bnk","HLS","Low",..: 4 4 4 4 4 4 4 2 4 4 ...
+##  $ Utilities         : Factor w/ 3 levels "AllPub","NoSeWa",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Lot_Config        : Factor w/ 5 levels "Corner","CulDSac",..: 1 5 1 1 5 5 5 5 5 5 ...
+##  $ Land_Slope        : Factor w/ 3 levels "Gtl","Mod","Sev": 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Neighborhood      : Factor w/ 29 levels "North_Ames","College_Creek",..: 1 1 1 1 7 7 17 17 17 7 ...
+##  $ Condition_1       : Factor w/ 9 levels "Artery","Feedr",..: 3 2 3 3 3 3 3 3 3 3 ...
+##  $ Condition_2       : Factor w/ 8 levels "Artery","Feedr",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ Bldg_Type         : Factor w/ 5 levels "OneFam","TwoFmCon",..: 1 1 1 1 1 1 5 5 5 1 ...
+##  $ House_Style       : Factor w/ 8 levels "One_and_Half_Fin",..: 3 3 3 3 8 8 3 3 3 8 ...
+##  $ Overall_Cond      : Factor w/ 10 levels "Very_Poor","Poor",..: 5 6 6 5 5 6 5 5 5 5 ...
+##  $ Year_Built        : int [1:2930] 1960 1961 1958 1968 1997 1998 2001 1992 1995 1999 ...
+##  $ Year_Remod_Add    : int [1:2930] 1960 1961 1958 1968 1998 1998 2001 1992 1996 1999 ...
+##  $ Roof_Style        : Factor w/ 6 levels "Flat","Gable",..: 4 2 4 4 2 2 2 2 2 2 ...
+##  $ Roof_Matl         : Factor w/ 8 levels "ClyTile","CompShg",..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ Exterior_1st      : Factor w/ 16 levels "AsbShng","AsphShn",..: 4 14 15 4 14 14 6 7 6 14 ...
+##  $ Exterior_2nd      : Factor w/ 17 levels "AsbShng","AsphShn",..: 11 15 16 4 15 15 6 7 6 15 ...
+##  $ Mas_Vnr_Type      : Factor w/ 5 levels "BrkCmn","BrkFace",..: 5 4 2 4 4 2 4 4 4 4 ...
+##  $ Mas_Vnr_Area      : num [1:2930] 112 0 108 0 0 20 0 0 0 0 ...
+##  $ Exter_Cond        : Factor w/ 5 levels "Excellent","Fair",..: 5 5 5 5 5 5 5 5 5 5 ...
+##  $ Foundation        : Factor w/ 6 levels "BrkTil","CBlock",..: 2 2 2 2 3 3 3 3 3 3 ...
+##  $ Bsmt_Cond         : Factor w/ 6 levels "Excellent","Fair",..: 3 6 6 6 6 6 6 6 6 6 ...
+##  $ Bsmt_Exposure     : Factor w/ 5 levels "Av","Gd","Mn",..: 2 4 4 4 4 4 3 4 4 4 ...
+##  $ BsmtFin_Type_1    : Factor w/ 7 levels "ALQ","BLQ","GLQ",..: 2 6 1 1 3 3 3 1 3 7 ...
+##  $ BsmtFin_SF_1      : num [1:2930] 2 6 1 1 3 3 3 1 3 7 ...
+##  $ BsmtFin_Type_2    : Factor w/ 7 levels "ALQ","BLQ","GLQ",..: 7 4 7 7 7 7 7 7 7 7 ...
+##  $ BsmtFin_SF_2      : num [1:2930] 0 144 0 0 0 0 0 0 0 0 ...
+##  $ Bsmt_Unf_SF       : num [1:2930] 441 270 406 1045 137 ...
+##  $ Total_Bsmt_SF     : num [1:2930] 1080 882 1329 2110 928 ...
+##  $ Heating           : Factor w/ 6 levels "Floor","GasA",..: 2 2 2 2 2 2 2 2 2 2 ...
+##  $ Heating_QC        : Factor w/ 5 levels "Excellent","Fair",..: 2 5 5 1 3 1 1 1 1 3 ...
+##  $ Central_Air       : Factor w/ 2 levels "N","Y": 2 2 2 2 2 2 2 2 2 2 ...
+##  $ Electrical        : Factor w/ 6 levels "FuseA","FuseF",..: 5 5 5 5 5 5 5 5 5 5 ...
+##  $ First_Flr_SF      : int [1:2930] 1656 896 1329 2110 928 926 1338 1280 1616 1028 ...
+##  $ Second_Flr_SF     : int [1:2930] 0 0 0 0 701 678 0 0 0 776 ...
+##  $ Gr_Liv_Area       : int [1:2930] 1656 896 1329 2110 1629 1604 1338 1280 1616 1804 ...
+##  $ Bsmt_Full_Bath    : num [1:2930] 1 0 0 1 0 0 1 0 1 0 ...
+##  $ Bsmt_Half_Bath    : num [1:2930] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ Full_Bath         : int [1:2930] 1 1 1 2 2 2 2 2 2 2 ...
+##  $ Half_Bath         : int [1:2930] 0 0 1 1 1 1 0 0 0 1 ...
+##  $ Bedroom_AbvGr     : int [1:2930] 3 2 3 3 3 3 2 2 2 3 ...
+##  $ Kitchen_AbvGr     : int [1:2930] 1 1 1 1 1 1 1 1 1 1 ...
+##  $ TotRms_AbvGrd     : int [1:2930] 7 5 6 8 6 7 6 5 5 7 ...
+##  $ Functional        : Factor w/ 8 levels "Maj1","Maj2",..: 8 8 8 8 8 8 8 8 8 8 ...
+##  $ Fireplaces        : int [1:2930] 2 0 0 2 1 1 0 0 1 1 ...
+##  $ Garage_Type       : Factor w/ 7 levels "Attchd","Basment",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ Garage_Finish     : Factor w/ 4 levels "Fin","No_Garage",..: 1 4 4 1 1 1 1 3 3 1 ...
+##  $ Garage_Cars       : num [1:2930] 2 1 1 2 2 2 2 2 2 2 ...
+##  $ Garage_Area       : num [1:2930] 528 730 312 522 482 470 582 506 608 442 ...
+##  $ Garage_Cond       : Factor w/ 6 levels "Excellent","Fair",..: 6 6 6 6 6 6 6 6 6 6 ...
+##  $ Paved_Drive       : Factor w/ 3 levels "Dirt_Gravel",..: 2 3 3 3 3 3 3 3 3 3 ...
+##  $ Wood_Deck_SF      : int [1:2930] 210 140 393 0 212 360 0 0 237 140 ...
+##  $ Open_Porch_SF     : int [1:2930] 62 0 36 0 34 36 0 82 152 60 ...
+##  $ Enclosed_Porch    : int [1:2930] 0 0 0 0 0 0 170 0 0 0 ...
+##  $ Three_season_porch: int [1:2930] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ Screen_Porch      : int [1:2930] 0 120 0 0 0 0 0 144 0 0 ...
+##  $ Pool_Area         : int [1:2930] 0 0 0 0 0 0 0 0 0 0 ...
+##  $ Pool_QC           : Factor w/ 5 levels "Excellent","Fair",..: 4 4 4 4 4 4 4 4 4 4 ...
+##  $ Fence             : Factor w/ 5 levels "Good_Privacy",..: 5 3 5 5 3 5 5 5 5 5 ...
+##  $ Misc_Feature      : Factor w/ 6 levels "Elev","Gar2",..: 3 3 2 3 3 3 3 3 3 3 ...
+##  $ Misc_Val          : int [1:2930] 0 0 12500 0 0 0 0 0 0 0 ...
+##  $ Mo_Sold           : int [1:2930] 5 6 6 4 3 6 4 1 3 6 ...
+##  $ Year_Sold         : int [1:2930] 2010 2010 2010 2010 2010 2010 2010 2010 2010 2010 ...
+##  $ Sale_Type         : Factor w/ 10 levels "COD","Con","ConLD",..: 10 10 10 10 10 10 10 10 10 10 ...
+##  $ Sale_Condition    : Factor w/ 6 levels "Abnorml","AdjLand",..: 5 5 5 5 5 5 5 5 5 5 ...
+##  $ Sale_Price        : int [1:2930] 215000 105000 172000 244000 189900 195500 213500 191500 236500 189000 ...
+##  $ Longitude         : num [1:2930] -93.6 -93.6 -93.6 -93.6 -93.6 ...
+##  $ Latitude          : num [1:2930] 42.1 42.1 42.1 42.1 42.1 ...
+##  - attr(*, "spec")=
+##   .. cols(
+##   ..   Order = col_integer(),
+##   ..   PID = col_character(),
+##   ..   `MS SubClass` = col_character(),
+##   ..   `MS Zoning` = col_character(),
+##   ..   `Lot Frontage` = col_integer(),
+##   ..   `Lot Area` = col_integer(),
+##   ..   Street = col_character(),
+##   ..   Alley = col_character(),
+##   ..   `Lot Shape` = col_character(),
+##   ..   `Land Contour` = col_character(),
+##   ..   Utilities = col_character(),
+##   ..   `Lot Config` = col_character(),
+##   ..   `Land Slope` = col_character(),
+##   ..   Neighborhood = col_character(),
+##   ..   `Condition 1` = col_character(),
+##   ..   `Condition 2` = col_character(),
+##   ..   `Bldg Type` = col_character(),
+##   ..   `House Style` = col_character(),
+##   ..   `Overall Qual` = col_integer(),
+##   ..   `Overall Cond` = col_integer(),
+##   ..   `Year Built` = col_integer(),
+##   ..   `Year Remod/Add` = col_integer(),
+##   ..   `Roof Style` = col_character(),
+##   ..   `Roof Matl` = col_character(),
+##   ..   `Exterior 1st` = col_character(),
+##   ..   `Exterior 2nd` = col_character(),
+##   ..   `Mas Vnr Type` = col_character(),
+##   ..   `Mas Vnr Area` = col_integer(),
+##   ..   `Exter Qual` = col_character(),
+##   ..   `Exter Cond` = col_character(),
+##   ..   Foundation = col_character(),
+##   ..   `Bsmt Qual` = col_character(),
+##   ..   `Bsmt Cond` = col_character(),
+##   ..   `Bsmt Exposure` = col_character(),
+##   ..   `BsmtFin Type 1` = col_character(),
+##   ..   `BsmtFin SF 1` = col_integer(),
+##   ..   `BsmtFin Type 2` = col_character(),
+##   ..   `BsmtFin SF 2` = col_integer(),
+##   ..   `Bsmt Unf SF` = col_integer(),
+##   ..   `Total Bsmt SF` = col_integer(),
+##   ..   Heating = col_character(),
+##   ..   `Heating QC` = col_character(),
+##   ..   `Central Air` = col_character(),
+##   ..   Electrical = col_character(),
+##   ..   `1st Flr SF` = col_integer(),
+##   ..   `2nd Flr SF` = col_integer(),
+##   ..   `Low Qual Fin SF` = col_integer(),
+##   ..   `Gr Liv Area` = col_integer(),
+##   ..   `Bsmt Full Bath` = col_integer(),
+##   ..   `Bsmt Half Bath` = col_integer(),
+##   ..   `Full Bath` = col_integer(),
+##   ..   `Half Bath` = col_integer(),
+##   ..   `Bedroom AbvGr` = col_integer(),
+##   ..   `Kitchen AbvGr` = col_integer(),
+##   ..   `Kitchen Qual` = col_character(),
+##   ..   `TotRms AbvGrd` = col_integer(),
+##   ..   Functional = col_character(),
+##   ..   Fireplaces = col_integer(),
+##   ..   `Fireplace Qu` = col_character(),
+##   ..   `Garage Type` = col_character(),
+##   ..   `Garage Yr Blt` = col_integer(),
+##   ..   `Garage Finish` = col_character(),
+##   ..   `Garage Cars` = col_integer(),
+##   ..   `Garage Area` = col_integer(),
+##   ..   `Garage Qual` = col_character(),
+##   ..   `Garage Cond` = col_character(),
+##   ..   `Paved Drive` = col_character(),
+##   ..   `Wood Deck SF` = col_integer(),
+##   ..   `Open Porch SF` = col_integer(),
+##   ..   `Enclosed Porch` = col_integer(),
+##   ..   `3Ssn Porch` = col_integer(),
+##   ..   `Screen Porch` = col_integer(),
+##   ..   `Pool Area` = col_integer(),
+##   ..   `Pool QC` = col_character(),
+##   ..   Fence = col_character(),
+##   ..   `Misc Feature` = col_character(),
+##   ..   `Misc Val` = col_integer(),
+##   ..   `Mo Sold` = col_integer(),
+##   ..   `Yr Sold` = col_integer(),
+##   ..   `Sale Type` = col_character(),
+##   ..   `Sale Condition` = col_character(),
+##   ..   SalePrice = col_integer()
+##   .. )
+```
+
+---
+
+Let's select the first few columns and get their summaries.
+
+
+```r
+ames %&gt;% 
+  select(Lot_Frontage:Lot_Config) %&gt;% 
+  summary()
+```
+
+```
+##   Lot_Frontage       Lot_Area       Street                 Alley     
+##  Min.   :  0.00   Min.   :  1300   Grvl:  12   Gravel         : 120  
+##  1st Qu.: 43.00   1st Qu.:  7440   Pave:2918   No_Alley_Access:2732  
+##  Median : 63.00   Median :  9436               Paved          :  78  
+##  Mean   : 57.65   Mean   : 10148                                     
+##  3rd Qu.: 78.00   3rd Qu.: 11555                                     
+##  Max.   :313.00   Max.   :215245                                     
+##                 Lot_Shape    Land_Contour  Utilities      Lot_Config  
+##  Regular             :1859   Bnk: 117     AllPub:2927   Corner : 511  
+##  Slightly_Irregular  : 979   HLS: 120     NoSeWa:   1   CulDSac: 180  
+##  Moderately_Irregular:  76   Low:  60     NoSewr:   2   FR2    :  85  
+##  Irregular           :  16   Lvl:2633                   FR3    :  14  
+##                                                         Inside :2140  
+## 
+```
+
+`select()` is from the {dplyr} package, a popular tool for data manipulation.
+
+---
+class: middle, center
+
+## _A Brief Aside_
+
+### What the heck is
+
+# `%&gt;%`
+
+### ???
+
+---
+
+.center[ 
+# %&gt;% 
+## This is a _pipe_.
+]
+
+The _pipe_ is a tool that allows people to _chain functions together_. Rather than writing
+
+
+```r
+h(g(f(x)))
+```
+
+we can write
+
+
+```r
+x %&gt;% 
+  f() %&gt;% 
+  g() %&gt;% 
+  h()
+```
+
+The pipe is provided by the **{magrittr}** package (and re-exported by members of tidyverse). It works by inserting the _output_ of the previous function into the _first_ argument of the next.
+
+---
+
+### This means
+
+
+```r
+step1 &lt;- first_step(input)
+step2 &lt;- second_step(step1, run_task = TRUE)
+third_step(step2, with_marmalade = FALSE)
+```
+
+### is functionally equivalent to
+
+
+```r
+input %&gt;% 
+  first_step() %&gt;% 
+  second_step(run_task = TRUE) %&gt;% 
+  third_step(with_marmalade = FALSE)
+```
+
+--
+
+.center[
+## Cleaner, no?
+]
+
+---
+class: middle, center, inverse
+
+# Aside over
+
+## ✅
+
+---
+class: middle
+
+We have all of this housing data. Let's explore it a bit.
+
+--
+
+Why not take a look at historical trends?
+
+--
+
+The package **{ggplot2}** gives us a handy toolkit for visualization based on the Grammar of Graphics (basic overview [here](https://towardsdatascience.com/a-comprehensive-guide-to-the-grammar-of-graphics-for-effective-visualization-of-multi-dimensional-1f92b4ed4149)).
+
+---
+
+
+```r
+ames %&gt;% 
+  ggplot(aes(x = Year_Built)) +
+  geom_histogram()
+```
+
+![](index_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+
+---
+class: middle
+
+## How does the sale price relate to the construction year?
+
+---
+
+
+```r
+ames %&gt;% 
+  ggplot(aes(x = Year_Built, y = Sale_Price)) +
+  geom_point() + 
+  stat_smooth(method = "loess")
+```
+
+![](index_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
+
+---
+class: middle
+
+### Looks like the prices started to rise after the 1940s.
+
+## Could the inclusion of air conditioning have anything to do with it?
+
+---
+
+Firstly, let's put the sale price on log units.
+
+
+```r
+ames_edited &lt;- 
+  ames %&gt;% 
+  mutate(log_sale_price = log10(Sale_Price))
+```
+
+`mutate()` is another {dplyr} function that creates or modifies variables in a dataset. In this case, I'm creating the variable `log_sale_price` to exist in the newly created `ames_edited` dataset.
+
+--
+
+_Yes, you can have multiple datasets open at once!_
+
+--
+
+The `&lt;-` symbol is the _assignment operator_ in R. It assigns the value of the right-hand side to a variable _symbol_ on the left-hand side.
+
+---
+
+
+```r
+ames_edited %&gt;% 
+  ggplot(aes(x = Year_Built, y = log_sale_price, color = Central_Air)) +
+  geom_point(alpha = 0.5)
+```
+
+![](index_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+
+---
+class: middle
+
+### It's a little hard to tease out with that visualization, but it looks to have some form of effect.
+
+## Let's split the plots to see better...
+
+---
+
+
+```r
+ames_edited %&gt;% 
+  ggplot(aes(x = Year_Built, y = log_sale_price)) +
+  geom_point(alpha = 0.5) +
+  stat_smooth(method = "lm") +
+  facet_wrap(~ Central_Air)
+```
+
+![](index_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+
+---
+
+### It definitely seems to influence the sale price to some degree. 
+
+### Let's run ANOVA to get some statistical insight. 
+
+### But this time let's do this in a more streamlined and scalable manner...
+
+---
+class: middle
+
+
+```r
+# No Central_Air covariate
+mod_1 &lt;- log_sale_price ~ Year_Built
+
+# Inclusion of Central_Air, but no interaction with Year_Built 
+mod_2 &lt;- log_sale_price ~ Year_Built + Central_Air
+
+# Inclusion of Central_Air with interaction
+mod_3 &lt;- log_sale_price ~ Year_Built * Central_Air 
+
+splat &lt;- function(.x, .f) {
+  do.call(.f, .x)
+}
+
+mod_anova &lt;- 
+  # Collect all models together
+  list(mod_1, mod_2, mod_3) %&gt;% 
+  
+  # For each model, run a linear model fit with ames_edited
+  map(function(.x) lm(.x, data = ames_edited)) %&gt;% 
+  
+  # "Splat" the results into anova: 
+  # Converts splat(x, f) --&gt; f(x_1, x_2, ..., x_n)
+  splat(anova)
+```
+
+.center[
+## 😲🤨
+]
+
+---
+
+We'll use the **{broom}** package from tidymodels to collect the summary statistics into a consistent format. There are **_many_** modeling packages out there, and not all of them have consistent output. broom solves this problem for _most_ common modeling tools.
+
+
+```r
+library(broom)
+```
+
+--
+
+
+```r
+tidy(mod_anova)
+```
+
+```
+## # A tibble: 3 x 6
+##   res.df   rss    df sumsq statistic   p.value
+##    &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt; &lt;dbl&gt;     &lt;dbl&gt;     &lt;dbl&gt;
+## 1   2928  57.0    NA NA         NA   NA       
+## 2   2927  54.9     1  2.13     116.   1.26e-26
+## 3   2926  53.5     1  1.34      73.0  2.06e-17
+```
+
+---
+
+# Summary
+
+- Has a great ecosystem of tools for data manipulation and visualization.
+- Has an *impressively large* selection of modeling tools&lt;sup&gt;1&lt;/sup&gt;, and {broom} deals with _tidying_ the model outputs into a consistent format.
+- Is _extremely versatile_ because of its **functional language** style.
+- Has a very friendly community, many of whom are in NYC!
+
+.footnote[
+[1]: It is a language built by statisticians after all.
+]
+---
+class: center, middle, inverse
+
+# So how does the Data Team use R?
+
+# 🤔
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
-<script>var slideshow = remark.create();
+<script>var slideshow = remark.create({
+"countIncrementalSlides": false,
+"highlightLines": true
+});
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
   window.dispatchEvent(new Event('resize'));
 });
@@ -157,7 +718,24 @@ if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
       links[i].target = '_blank';
     }
   }
-})();</script>
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
 
 <script>
 slideshow._releaseMath = function(el) {

@@ -20,4 +20,5 @@ Imports:
     xaringan,
     xaringanthemer,
     rmarkdown,
-    knitr
+    knitr,
+    skimr
