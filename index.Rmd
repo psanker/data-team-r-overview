@@ -44,6 +44,7 @@ class: middle, center, inverse
 # Background
 
 ---
+class: middle
 
 ## Data Team Motivation
 
@@ -52,6 +53,7 @@ class: middle, center, inverse
 - Previously no 3EA-specific standards for data management
 
 ---
+class: middle
 
 ## Why R?
 
@@ -61,6 +63,14 @@ class: middle, center, inverse
 --
 
 - Mayarí started the team, and she knew R so... here we are lol
+
+---
+class: middle
+
+## Agenda
+
+1. Quick overview of R
+1. How the Data Team uses R
 
 ---
 class: inverse, middle, center
@@ -430,3 +440,11 @@ background-image: url('images/icon-grid.png')
 
 ---
 background-image: url('images/icon-grid-labels.png')
+
+---
+background-image: url('images/icon-grid-authors.png')
+
+---
+background-image: url('images/pipeline-outline.png')
+
+# Pipeline Outline
