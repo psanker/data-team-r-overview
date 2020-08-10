@@ -406,3 +406,27 @@ class: center, middle, inverse
 # So how does the Data Team use R?
 
 # 🤔
+
+---
+
+# The Data Team are _engineers_
+
+We don't perform analyses<sup>1</sup>. We make sure the data used for analysis is as trustworthy as possible.
+
+--
+
+## As such, we emphasize data documentation and lineage
+
+We build tools and automated pipelines to speed up the data cleaning process while still retaining necessary information about how the data were transformed to maximize transparency.
+
+.footnote[
+[1]: We have an ongoing modeling project to detect record mislinkage to make verification less manually intensive.
+]
+
+---
+background-image: url('images/icon-grid.png')
+
+# The Tools We Use
+
+---
+background-image: url('images/icon-grid-labels.png')
