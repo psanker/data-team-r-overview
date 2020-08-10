@@ -278,6 +278,64 @@ ames %>%
 ```
 
 ---
+
+# A Sincere Apology
+
+See this:
+
+```r
+ames %>% 
+* ggplot(aes(x = Year_Built)) +
+  geom_histogram()
+```
+
+--
+
+This is how **{ggplot2}** does function chaining. The choice of **`+`** was done prior to `%>%` existing.
+
+--
+
+The author, **Hadley Wickham**, decided that "adding" layers would make intuitive sense (it does).
+
+--
+
+Sadly, it doesn't generalize. So, we have this `+` and `%>%` combination. And for that I apologize.
+
+---
+
+## Just remember...
+
+--
+
+.center[
+### `+`
+
+for {ggplot2} functions
+]
+
+--
+
+.center[
+### `%>%`
+
+for everything else.
+]
+
+--
+
+.center[
+# OK 😁
+]
+
+---
+
+```{r, warning=FALSE, fig.height=7, message=FALSE}
+ames %>% 
+  ggplot(aes(x = Year_Built)) +
+  geom_histogram()
+```
+
+---
 class: middle
 
 ## How does the sale price relate to the construction year?
