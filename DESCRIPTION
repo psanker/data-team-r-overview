@@ -21,4 +21,6 @@ Imports:
     xaringanthemer,
     rmarkdown,
     knitr,
-    skimr
+    skimr,
+    here,
+    janitor
