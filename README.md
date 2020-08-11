@@ -18,15 +18,18 @@ If you’d like to play around with the materials here, do these tasks:
 1.  `git clone` this repo into your folder of choice (you can also use
     the `Code > Download ZIP...` button).
 2.  Open the `.Rproj` file in RStudio
-3.  Run these commands in the console:
+3.  Run this command in the console:
 
 <!-- end list -->
 
 ``` r
-# If you haven't already installed it,
-install.packages("devtools")
-devtools::install_deps(dependencies = TRUE)
+source("install.R")
 ```
 
 That should install all of the packages needed to build this
-presentation.
+presentation and run the example drake workflow.
+
+Note: it may yell at you about a “GitHub personal access token”. See
+[this blurb in *Happy Git with
+R*](https://happygitwithr.com/github-pat.html#step-by-step) for more
+information and context.
