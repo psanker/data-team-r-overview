@@ -23,4 +23,6 @@ Imports:
     knitr,
     skimr,
     here,
-    janitor
+    janitor,
+    fs,
+    visNetwork

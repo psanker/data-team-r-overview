@@ -506,3 +506,39 @@ background-image: url('images/icon-grid-authors.png')
 background-image: url('images/pipeline-outline.png')
 
 # Pipeline Outline
+
+---
+
+# Basic Project Setup
+
+```{r, echo=FALSE}
+dont_include <- c(
+  "\\.DS_Store",
+  "\\.Rproj\\.user",
+  "\\.(drake|git)",
+  "_config\\.yml",
+  "\\.(git|Rbuild)ignore",
+  "NAMESPACE",
+  "images",
+  "index_files",
+  "index\\.(Rmd|html)",
+  "xaringan-themer\\.css",
+  "install\\.R",
+  ".*\\.Rproj",
+  "README\\.R?md"
+)
+
+dont_include <- paste0(paste0("^", dont_include, "$"), collapse = "|")
+
+fs::dir_tree(all = TRUE, regexp = dont_include, invert = TRUE)
+```
+
+---
+
+# Drake Plan Status
+
+```{r, echo=FALSE, message=FALSE}
+drake::r_vis_drake_graph()
+```
+
+

@@ -5,9 +5,11 @@ source(here::here("R/packages.R"))
 source(here::here("R/plan.R"))
 
 # Attach blueprints to plan
+suppressMessages(
 the_plan <-
   the_plan %>%
   load_blueprints()
+)
 
 drake_config(
   the_plan
