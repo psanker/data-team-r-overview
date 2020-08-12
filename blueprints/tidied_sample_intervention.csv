@@ -1,7 +1,7 @@
 "name","description","type","coding","section"
 "participant_id","Anonymized ID of participant","double",,"Participant Descriptives"
 "cohort","Cohort membership","integer","coding(code(""A"", 1), code(""B"", 2))","Participant Descriptives"
-"intervention","Which treatment the participant experienced","integer","coding(code(""TX"", 1), code(""No TX"", -1))","Participant Descriptives"
+"intervention","Which treatment the participant experienced","integer","coding(code(""Treatment"", 1), code(""Control"", -1))","Participant Descriptives"
 "female","Participant gender","integer","coding(code(""Male"", 0), code(""Female"", 1))","Participant Descriptives"
 "final_grade",,"double",,"Final measurements"
 "final_score",,"double",,"Final measurements"
