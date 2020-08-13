@@ -25,4 +25,5 @@ Imports:
     here,
     janitor,
     fs,
-    visNetwork
+    visNetwork,
+    kableExtra

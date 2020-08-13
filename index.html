@@ -781,7 +781,158 @@ background-image: url('images/pipeline-outline.png')
 
 ---
 
-# Drake Plan Status
+# Drake Plan
+
+
+```r
+the_plan &lt;- drake_plan(
+  # ------ 1. Loading ------
+  raw_sample_intervention = read_csv(file_in(!!here::here("data/raw/sample_intervention_dataset.csv"))),
+
+  # ------ 2. Blueprints ------
+  # 1. tidied_sample_intervention: Cleaned up variable names and no factors
+
+  # ------ 3. Export prepared datasets ------
+  export_tidied_intervention =
+    tidied_sample_intervention %&gt;%
+    write_csv(file_out(!!here::here("data/derived/tidied_sample_intervention.csv")))
+)
+```
+
+---
+
+&lt;style&gt;
+.font10 .remark-code-line {
+  font-size: 10pt;
+}
+&lt;/style&gt;
+
+# Example Blueprint
+
+.font10[
+
+```r
+blueprint(
+  "tidied_sample_intervention",
+  description = "Basically the raw sample of intervention data, but with tidied names",
+  command =
+    raw_sample_intervention %&gt;%
+
+    # Drop the generated row number column
+    select(-X1) %&gt;%
+
+    # Make column names snake_case
+    janitor::clean_names() %&gt;%
+
+    # Rename `coded_id` to `participant_id` for clarity
+    rename(participant_id = coded_id) %&gt;%
+
+    # Make `cohort` an index variable
+    mutate(cohort = as.integer(ifelse(cohort == "A", 1, 2))) %&gt;%
+
+    # Make `intervention` and `female` integers
+    mutate(
+      intervention = as.integer(intervention),
+      female = as.integer(intervention)
+    ),
+
+  codebook_export = TRUE
+)
+```
+]
+
+---
+
+&lt;style&gt;
+.font10 table {
+  font-size: 10pt;
+}
+&lt;/style&gt;
+
+# Example Blueprint
+
+.font10[
+&lt;table&gt;
+ &lt;thead&gt;
+  &lt;tr&gt;
+   &lt;th style="text-align:left;"&gt; name &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; description &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; type &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; coding &lt;/th&gt;
+   &lt;th style="text-align:left;"&gt; section &lt;/th&gt;
+  &lt;/tr&gt;
+ &lt;/thead&gt;
+&lt;tbody&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; participant_id &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Anonymized ID of participant &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; double &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Participant Descriptives &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; cohort &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Cohort membership &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; integer &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; coding(code(&amp;quot;A&amp;quot;, 1), code(&amp;quot;B&amp;quot;, 2)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Participant Descriptives &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; intervention &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Which treatment the participant experienced &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; integer &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; coding(code(&amp;quot;Treatment&amp;quot;, 1), code(&amp;quot;Control&amp;quot;, -1)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Participant Descriptives &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; female &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Participant gender &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; integer &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; coding(code(&amp;quot;Male&amp;quot;, 0), code(&amp;quot;Female&amp;quot;, 1)) &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Participant Descriptives &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; final_grade &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; double &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Final measurements &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; final_score &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; double &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Final measurements &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; baseline_math_score &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; double &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Baseline measurements &lt;/td&gt;
+  &lt;/tr&gt;
+  &lt;tr&gt;
+   &lt;td style="text-align:left;"&gt; baseline_stereotype_endorsement &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; double &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt;  &lt;/td&gt;
+   &lt;td style="text-align:left;"&gt; Baseline measurements &lt;/td&gt;
+  &lt;/tr&gt;
+&lt;/tbody&gt;
+&lt;/table&gt;
+]
+
+
+---
+
+&lt;style&gt;
+#htmlwidget-96cc3328ae90ce51667f {
+  width: 100% !important;
+}
+&lt;/style&gt;
+
+# Dynamic Project Status
 
 <div id="htmlwidget-96cc3328ae90ce51667f" style="width:504px;height:504px;" class="visNetwork html-widget"></div>
 <script type="application/json" data-for="htmlwidget-96cc3328ae90ce51667f">{"x":{"nodes":{"id":["n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPOJQXOL3TMFWXA3DFL5UW45DFOJ3GK3TUNFXW4X3EMF2GC43FOQXGG43W","n-MRYGY6LSHI5HI2LCMJWGK","raw_sample_intervention","tidied_sample_intervention_meta","tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_checks","tidied_sample_intervention_codebook","tidied_sample_intervention","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPMRSXE2LWMVSC65DJMRUWKZC7ONQW24DMMVPWS3TUMVZHMZLOORUW63ROMNZXM"],"imported":[true,true,true,false,false,false,false,false,false,false,false,false],"label":["janitor::clean_names","file /Users/patrickanker/dev/data-team-r-overview\n/data/raw/sample_intervention_dataset.csv","dplyr::tibble","raw_sample_intervention\n0.038s","tidied_sample_intervention_meta\n0.038s","tidied_sample_intervention_initial\n0.117s","tidied_sample_intervention_blueprint\n0.019s","tidied_sample_intervention_checks\n0.068s","tidied_sample_intervention_codebook\n1.379s","tidied_sample_intervention\n0.005s","export_tidied_intervention\n0.012s","file /Users/patrickanker/dev/data-team-r-overview\n/data/derived/tidied_sample_intervention.csv"],"status":["imported","imported","imported","up to date","up to date","up to date","up to date","up to date","up to date","up to date","up to date","up to date"],"type":["function","file","function","object","object","object","object","object","object","object","object","file"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20],"color":["#1874CD","#1874CD","#1874CD","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22"],"shape":["triangle","square","triangle","dot","dot","dot","dot","dot","dot","dot","dot","square"],"level":[1,1,1,2,2,3,3,4,4,5,6,7],"x":[-1,-1,-1,-0.666666666666667,-0.666666666666667,-0.333333333333333,-0.333333333333333,0,0,0.333333333333333,0.666666666666667,1],"y":[-1,0,1,-0.666666666666667,0.666666666666667,-0.666666666666667,0.666666666666667,-0.666666666666667,0.666666666666667,0,0,0]},"edges":{"from":["raw_sample_intervention","raw_sample_intervention","n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","tidied_sample_intervention_initial","tidied_sample_intervention_initial","tidied_sample_intervention_checks","tidied_sample_intervention_blueprint","tidied_sample_intervention_blueprint","tidied_sample_intervention_blueprint","tidied_sample_intervention_meta","tidied_sample_intervention_meta","tidied_sample_intervention_meta","tidied_sample_intervention","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPOJQXOL3TMFWXA3DFL5UW45DFOJ3GK3TUNFXW4X3EMF2GC43FOQXGG43W","n-MRYGY6LSHI5HI2LCMJWGK"],"to":["tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention_codebook","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention_codebook","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPMRSXE2LWMVSC65DJMRUWKZC7ONQW24DMMVPWS3TUMVZHMZLOORUW63ROMNZXM","raw_sample_intervention","tidied_sample_intervention_meta"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"interaction":{"navigationButtons":true},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"Dependency graph","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Imported","Object","Function","File"],"color":["#228B22","#1874CD","#888888","#888888","#888888"],"shape":["dot","dot","dot","triangle","square"],"font.color":["black","black","black","black","black"],"font.size":[20,20,20,20,20],"id":[1,6,8,10,11]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>

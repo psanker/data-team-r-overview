@@ -535,7 +535,61 @@ fs::dir_tree(all = TRUE, regexp = dont_include, invert = TRUE)
 
 ---
 
-# Drake Plan Status
+# Drake Plan
+
+```{r, eval=FALSE, code=readLines("R/plan.R")}
+```
+
+---
+
+<style>
+.font10 .remark-code-line {
+  font-size: 10pt;
+}
+</style>
+
+# Example Blueprint
+
+.font10[
+```{r, eval=FALSE, code=readLines("blueprints/tidied_sample_intervention.R")}
+```
+]
+
+---
+
+<style>
+.font10 table {
+  font-size: 10pt;
+}
+</style>
+
+# Example Blueprint
+
+.font10[
+```{r, echo=FALSE}
+meta <- read_csv(
+  here::here("blueprints/tidied_sample_intervention.csv"),
+  col_types = cols()
+)
+
+meta <- meta %>% 
+  mutate(across(where(is.character), ~ ifelse(is.na(.x), "", .x)))
+
+meta %>% 
+  kableExtra::kable()
+```
+]
+
+
+---
+
+<style>
+#htmlwidget-96cc3328ae90ce51667f {
+  width: 100% !important;
+}
+</style>
+
+# Dynamic Project Status
 
 ```{r, echo=FALSE, message=FALSE}
 drake::r_vis_drake_graph()
