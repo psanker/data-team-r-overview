@@ -19,7 +19,7 @@ blueprint(
     # Make `intervention` and `female` integers
     mutate(
       intervention = as.integer(intervention),
-      female = as.integer(intervention)
+      female = as.integer(female)
     ),
 
   codebook_export = TRUE
