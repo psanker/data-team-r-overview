@@ -541,4 +541,47 @@ fs::dir_tree(all = TRUE, regexp = dont_include, invert = TRUE)
 drake::r_vis_drake_graph()
 ```
 
+---
+class: center, middle, inverse
 
+# Demo
+
+### _if there's time_
+
+---
+
+# Final Words
+
+R is a very powerful tool with so many features at your disposal:
+
+.pull-left[
+
+- Cutting-edge modeling software
+- Friendly software design
+- Expansive data manipulation toolkits
+- Literate programming with R Markdown
+
+]
+
+.pull-right[
+
+- State-of-the-art plotting tools
+- Extremely active ecosystem
+- Very extendable
+- Welcoming community
+
+]
+
+.center[
+### But most importantly...
+]
+
+---
+class: center, middle
+
+# It's free.
+
+---
+class: center, middle, inverse
+
+## Questions?

@@ -99,17 +99,17 @@ Packages collections of code that extend base R's functionality.
 
 ```
 ## # A tibble: 9 x 2
-##   Package   Version
-##   &lt;chr&gt;     &lt;chr&gt;  
-## 1 markdown  1.1    
-## 2 rversions 2.0.2  
-## 3 scales    1.1.1  
-## 4 parallel  4.0.2  
-## 5 ggforce   0.3.2  
-## 6 cli       2.0.2  
-## 7 gh        1.1.0  
-## 8 xopen     1.0.0  
-## 9 later     1.1.0.1
+##   Package  Version
+##   &lt;chr&gt;    &lt;chr&gt;  
+## 1 lazyeval 0.2.2  
+## 2 recipes  0.1.13 
+## 3 rematch2 2.1.2  
+## 4 miniUI   0.1.1.1
+## 5 furrr    0.1.0  
+## 6 classInt 0.4-3  
+## 7 ggforce  0.3.2  
+## 8 xopen    1.0.0  
+## 9 janitor  2.0.1
 ```
 
 ---
@@ -145,7 +145,7 @@ library(tidyverse)
 ```
 
 ```
-## ── Attaching packages ──────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
+## ── Attaching packages ───────────────────────────────────────────────────────────────────────────────── tidyverse 1.3.0 ──
 ```
 
 ```
@@ -156,7 +156,7 @@ library(tidyverse)
 ```
 
 ```
-## ── Conflicts ─────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
+## ── Conflicts ──────────────────────────────────────────────────────────────────────────────────── tidyverse_conflicts() ──
 ## x tidyr::extract()   masks magrittr::extract()
 ## x dplyr::filter()    masks stats::filter()
 ## x dplyr::lag()       masks stats::lag()
@@ -784,9 +784,52 @@ background-image: url('images/pipeline-outline.png')
 # Drake Plan Status
 
 <div id="htmlwidget-96cc3328ae90ce51667f" style="width:504px;height:504px;" class="visNetwork html-widget"></div>
-<script type="application/json" data-for="htmlwidget-96cc3328ae90ce51667f">{"x":{"nodes":{"id":["n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPOJQXOL3TMFWXA3DFL5UW45DFOJ3GK3TUNFXW4X3EMF2GC43FOQXGG43W","n-MRYGY6LSHI5HI2LCMJWGK","raw_sample_intervention","tidied_sample_intervention_meta","tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_checks","tidied_sample_intervention_codebook","tidied_sample_intervention","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPMRSXE2LWMVSC65DJMRUWKZC7ONQW24DMMVPWS3TUMVZHMZLOORUW63ROMNZXM"],"imported":[true,true,true,false,false,false,false,false,false,false,false,false],"label":["janitor::clean_names","file /Users/patrickanker/dev/data-team-r-overview\n/data/raw/sample_intervention_dataset.csv","dplyr::tibble","raw_sample_intervention\n0.038s","tidied_sample_intervention_meta\n0.024s","tidied_sample_intervention_initial\n0.117s","tidied_sample_intervention_blueprint\n0.019s","tidied_sample_intervention_checks\n0.055s","tidied_sample_intervention_codebook\n1.198s","tidied_sample_intervention\n0.007s","export_tidied_intervention\n0.012s","file /Users/patrickanker/dev/data-team-r-overview\n/data/derived/tidied_sample_intervention.csv"],"status":["imported","imported","imported","up to date","up to date","up to date","up to date","up to date","up to date","up to date","up to date","up to date"],"type":["function","file","function","object","object","object","object","object","object","object","object","file"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20],"color":["#1874CD","#1874CD","#1874CD","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22"],"shape":["triangle","square","triangle","dot","dot","dot","dot","dot","dot","dot","dot","square"],"level":[1,1,1,2,2,3,3,4,4,5,6,7],"x":[-1,-1,-1,-0.666666666666667,-0.666666666666667,-0.333333333333333,-0.333333333333333,0,0,0.333333333333333,0.666666666666667,1],"y":[-1,0,1,-0.666666666666667,0.666666666666667,-0.666666666666667,0.666666666666667,-0.666666666666667,0.666666666666667,0,0,0]},"edges":{"from":["raw_sample_intervention","raw_sample_intervention","n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","tidied_sample_intervention_initial","tidied_sample_intervention_initial","tidied_sample_intervention_checks","tidied_sample_intervention_blueprint","tidied_sample_intervention_blueprint","tidied_sample_intervention_blueprint","tidied_sample_intervention_meta","tidied_sample_intervention_meta","tidied_sample_intervention_meta","tidied_sample_intervention","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPOJQXOL3TMFWXA3DFL5UW45DFOJ3GK3TUNFXW4X3EMF2GC43FOQXGG43W","n-MRYGY6LSHI5HI2LCMJWGK"],"to":["tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention_codebook","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention_codebook","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPMRSXE2LWMVSC65DJMRUWKZC7ONQW24DMMVPWS3TUMVZHMZLOORUW63ROMNZXM","raw_sample_intervention","tidied_sample_intervention_meta"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"interaction":{"navigationButtons":true},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"Dependency graph","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Imported","Object","Function","File"],"color":["#228B22","#1874CD","#888888","#888888","#888888"],"shape":["dot","dot","dot","triangle","square"],"font.color":["black","black","black","black","black"],"font.size":[20,20,20,20,20],"id":[1,6,8,10,11]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-96cc3328ae90ce51667f">{"x":{"nodes":{"id":["n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPOJQXOL3TMFWXA3DFL5UW45DFOJ3GK3TUNFXW4X3EMF2GC43FOQXGG43W","n-MRYGY6LSHI5HI2LCMJWGK","raw_sample_intervention","tidied_sample_intervention_meta","tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_checks","tidied_sample_intervention_codebook","tidied_sample_intervention","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPMRSXE2LWMVSC65DJMRUWKZC7ONQW24DMMVPWS3TUMVZHMZLOORUW63ROMNZXM"],"imported":[true,true,true,false,false,false,false,false,false,false,false,false],"label":["janitor::clean_names","file /Users/patrickanker/dev/data-team-r-overview\n/data/raw/sample_intervention_dataset.csv","dplyr::tibble","raw_sample_intervention\n0.038s","tidied_sample_intervention_meta\n0.038s","tidied_sample_intervention_initial\n0.117s","tidied_sample_intervention_blueprint\n0.019s","tidied_sample_intervention_checks\n0.068s","tidied_sample_intervention_codebook\n1.379s","tidied_sample_intervention\n0.005s","export_tidied_intervention\n0.012s","file /Users/patrickanker/dev/data-team-r-overview\n/data/derived/tidied_sample_intervention.csv"],"status":["imported","imported","imported","up to date","up to date","up to date","up to date","up to date","up to date","up to date","up to date","up to date"],"type":["function","file","function","object","object","object","object","object","object","object","object","file"],"font.size":[20,20,20,20,20,20,20,20,20,20,20,20],"color":["#1874CD","#1874CD","#1874CD","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22","#228B22"],"shape":["triangle","square","triangle","dot","dot","dot","dot","dot","dot","dot","dot","square"],"level":[1,1,1,2,2,3,3,4,4,5,6,7],"x":[-1,-1,-1,-0.666666666666667,-0.666666666666667,-0.333333333333333,-0.333333333333333,0,0,0.333333333333333,0.666666666666667,1],"y":[-1,0,1,-0.666666666666667,0.666666666666667,-0.666666666666667,0.666666666666667,-0.666666666666667,0.666666666666667,0,0,0]},"edges":{"from":["raw_sample_intervention","raw_sample_intervention","n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","n-NJQW42LUN5ZDUOTDNRSWC3S7NZQW2ZLT","tidied_sample_intervention_initial","tidied_sample_intervention_initial","tidied_sample_intervention_checks","tidied_sample_intervention_blueprint","tidied_sample_intervention_blueprint","tidied_sample_intervention_blueprint","tidied_sample_intervention_meta","tidied_sample_intervention_meta","tidied_sample_intervention_meta","tidied_sample_intervention","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPOJQXOL3TMFWXA3DFL5UW45DFOJ3GK3TUNFXW4X3EMF2GC43FOQXGG43W","n-MRYGY6LSHI5HI2LCMJWGK"],"to":["tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_initial","tidied_sample_intervention_blueprint","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention_codebook","tidied_sample_intervention_checks","tidied_sample_intervention","tidied_sample_intervention_codebook","export_tidied_intervention","p-F5KXGZLSOMXXAYLUOJUWG23BNZVWK4RPMRSXML3EMF2GCLLUMVQW2LLSFVXXMZLSOZUWK5ZPMRQXIYJPMRSXE2LWMVSC65DJMRUWKZC7ONQW24DMMVPWS3TUMVZHMZLOORUW63ROMNZXM","raw_sample_intervention","tidied_sample_intervention_meta"],"arrows":["to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to","to"]},"nodesToDataframe":true,"edgesToDataframe":true,"options":{"width":"100%","height":"100%","nodes":{"shape":"dot","physics":false},"manipulation":{"enabled":false},"edges":{"smooth":{"type":"cubicBezier","forceDirection":"horizontal"}},"interaction":{"navigationButtons":true},"layout":{"hierarchical":{"enabled":true,"direction":"LR"}}},"groups":null,"width":null,"height":null,"idselection":{"enabled":false,"style":"width: 150px; height: 26px","useLabels":true,"main":"Select by id"},"byselection":{"enabled":false,"style":"width: 150px; height: 26px","multiple":false,"hideColor":"rgba(200,200,200,0.5)","highlight":false},"main":{"text":"Dependency graph","style":"font-family:Georgia, Times New Roman, Times, serif;font-weight:bold;font-size:20px;text-align:center;"},"submain":null,"footer":null,"background":"rgba(0, 0, 0, 0)","highlight":{"enabled":false,"hoverNearest":false,"degree":1,"algorithm":"all","hideColor":"rgba(200,200,200,0.5)","labelOnly":true},"collapse":{"enabled":true,"fit":false,"resetHighlight":true,"clusterOptions":null,"keepCoord":true,"labelSuffix":"(cluster)"},"legend":{"width":0.2,"useGroups":false,"position":"left","ncol":1,"stepX":100,"stepY":100,"zoom":true,"nodes":{"label":["Up to date","Imported","Object","Function","File"],"color":["#228B22","#1874CD","#888888","#888888","#888888"],"shape":["dot","dot","dot","triangle","square"],"font.color":["black","black","black","black","black"],"font.size":[20,20,20,20,20],"id":[1,6,8,10,11]},"nodesToDataframe":true},"tooltipStay":300,"tooltipStyle":"position: fixed;visibility:hidden;padding: 5px;white-space: nowrap;font-family: verdana;font-size:14px;font-color:#000000;background-color: #f5f4ed;-moz-border-radius: 3px;-webkit-border-radius: 3px;border-radius: 3px;border: 1px solid #808074;box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.2);"},"evals":[],"jsHooks":[]}</script>
 
+---
+class: center, middle, inverse
 
+# Demo
+
+### _if there's time_
+
+---
+
+# Final Words
+
+R is a very powerful tool with so many features at your disposal:
+
+.pull-left[
+
+- Cutting-edge modeling software
+- Friendly software design
+- Expansive data manipulation toolkits
+- Literate programming with R Markdown
+
+]
+
+.pull-right[
+
+- State-of-the-art plotting tools
+- Extremely active ecosystem
+- Very extendable
+- Welcoming community
+
+]
+
+.center[
+### But most importantly...
+]
+
+---
+class: center, middle
+
+# It's free.
+
+---
+class: center, middle, inverse
+
+## Questions?
     </textarea>
 <style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
